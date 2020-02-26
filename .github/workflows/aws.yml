@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Deploy to Amazon EC2
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    
+    steps:    
+    - name: SSH Commands
+      uses: appleboy/ssh-action@v0.0.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ubuntu
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: echo "Hello" > ~/test.txt
+        # script: cd /usr/share/wordpress/wp-content/themes/ && git pull && systemctl restart apache2.service
+        debug: true
